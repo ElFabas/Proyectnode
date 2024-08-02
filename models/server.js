@@ -2,7 +2,6 @@ const express = require("express");
 const cors =require("cors");
 const https = require('https');
 const fs= require('fs');
-const mongoose = require('mongoose');
 const { connect } = require("http2");
 
 
@@ -10,16 +9,14 @@ class Server {
     constructor(){
         this.app = express();
         this.port = process.env.PORT;
-        this.mongoose= mongoose;
 
         this.middlewares();
         this.listen();
-        this.routes();
-        this.conectarMongoose();
+        //this.routes();
     }
-    conectarMongoose(){
+    /*conectarMongoose(){
         //conexion a mongodb
-        this.mongoose.connect('mongodb://localhost:27017/Empresa');
+        //this.mongoose.connect('mongodb://localhost:27017/Empresa');
 
         //agregar esquema 
         let schemaEmpleado = new this.mongoose.Schema({
@@ -36,7 +33,7 @@ class Server {
         });
         this.Riego =this.mongoose.model('Riego', schemaRiego, 'Riego');
 
-    }
+    }*/
     middlewares(){
         //paginas estaticas
         this.app.use(express.static('public'));
@@ -44,7 +41,7 @@ class Server {
         this.app.use(cors());
 
     }
-    routes(){
+    /*routes(){
         this.app.get("/encenderRiego", async (req, res)=>{
             //cambiar estado =1 en la base de datos
             console.log("encendiendo...");
@@ -105,7 +102,7 @@ class Server {
                 console.error('Error al consultar empleados:', err);
                 res.status(500).json({ message: 'Error al consultar empleados' });
             }
-        });*/
+        });
         
 
 
@@ -128,7 +125,8 @@ class Server {
                 };
             res.json(pokemon);
         });
-    }
+    }*/
+
     listen(){
         https.createServer({
             key: fs.readFileSync('cert.key'),
